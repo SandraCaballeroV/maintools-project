@@ -1,2 +1,15 @@
 # maintools-project
 Repositorio colaborativo para el proyecto ciclo3 - programación de software
+Modificando 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi primera web</title>
+</head>
+<body>
+    <dev>HOLA MUNDO, ESTA ES MI PRIMERA WEB</dev>
+</body>
+</html>
