@@ -1,12 +1,12 @@
 import Cabecera from "../cabecera/Cabecera"
-
+import { Table } from "react-bootstrap"
 const RegistrarVenta = () =>{
     return(
         <div> 
             <Cabecera /> 
              Venta registrado
              <div>
-      <table>
+      <Table striped bordered hover>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -23,7 +23,7 @@ const RegistrarVenta = () =>{
             <td>Correoelectronico</td>
           </tr>
        </tbody>
-      </table>
+      </Table>
     </div>
         </div>
         
