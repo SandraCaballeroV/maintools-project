@@ -25,10 +25,13 @@ const RegistrarVenta = () =>{
   }
 
     return(
-        <div> 
-            <Cabecera /> 
-             Registro de ventas
-             <div>
+        <body> 
+            <Cabecera />
+            <div className = "mb-5">
+              <h2>Registro de ventas</h2>
+            </div> 
+              
+            
         <div>
           <form className="flex flex-co">
           <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="Fecha de la venta"/>
@@ -38,7 +41,10 @@ const RegistrarVenta = () =>{
           <input type="text" placeholder="Vendedor"/>
           <button type="button" onClick = {enviarDatosAlBack}>Registrar venta</button>
           </form>
-      <Table striped bordered hover>
+        </div>
+
+        <div className = "border border-dark mt-5">
+          <Table striped bordered hover>
         <thead>
           <tr>
             <th>Fecha</th>
@@ -59,8 +65,8 @@ const RegistrarVenta = () =>{
        </tbody>
       </Table>
       </div>
-    </div>
-        </div>
+    </body>
+        
         
     )
         
