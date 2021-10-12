@@ -1,6 +1,7 @@
 import Cabecera from "../cabecera/Cabecera"
 import { Table } from "react-bootstrap"
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState,form} from "react"
+
 const RegistrarVenta = () =>{
 
   const [idVenta,setIdVenta] = useState()
@@ -33,18 +34,19 @@ const RegistrarVenta = () =>{
               
             
         <div>
-          <form className="flex flex-co">
-          <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="Fecha de la venta"/>
-          <input onChange = {cambioUsuario} type="text" placeholder="ID venta"/>
-          <input type="text" placeholder="Nombre del cliente"/>
-          <input type="text" placeholder="Identificación del cliente"/>
-          <input type="text" placeholder="Vendedor"/>
-          <button type="button" onClick = {enviarDatosAlBack}>Registrar venta</button>
+          <form > 
+          <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="Fecha de la venta"/>&nbsp;   
+          <input onChange = {cambioUsuario} type="text" placeholder="ID venta"/>&nbsp;
+          <input type="text" placeholder="Nombre del cliente"/>&nbsp;
+          <input type="text" placeholder="Identificación del cliente"/>&nbsp;
+          <input type="text" placeholder="Vendedor"/>&nbsp;
           </form>
         </div>
-
-        <div className = "border border-dark mt-5">
-          <Table striped bordered hover>
+        <div className = "mt-3">
+        <button type="button" onClick = {enviarDatosAlBack}>Registrar venta</button>
+        </div>
+        <div className = "border border-dark mt-5 ">
+          <Table striped bordered hover >
         <thead>
           <tr>
             <th>Fecha</th>
