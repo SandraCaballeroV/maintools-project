@@ -24,7 +24,53 @@ const RegistrarVenta = () =>{
   const cambioUsuario = (e)=>{
     console.log(e.target.value);
   }
+  //const mostrarVentas = ()=>{
+    //const [ventas,setVentas] = useState([]);
+  //}
+//informacion de la base de datos
+  const ventas = [
+    {
+      Fecha:"dd/mm/aaaa",
+      idVenta:"111",
+      nombreCliente:"cliente1",
+      identificacionCliente:"12345",
+      vendedor:"usuario1"
+    },
+    {
+      Fecha:"dd/mm/aaaa",
+      idVenta:"222",
+      nombreCliente:"cliente1",
+      identificacionCliente:"12345",
+      vendedor:"usuario2"
+    },
+    {
+      Fecha:"dd/mm/aaaa",
+      idVenta:"333",
+      nombreCliente:"cliente1",
+      identificacionCliente:"12345",
+      vendedor:"usuario3"
+    },
+    {
+      Fecha:"dd/mm/aaaa",
+      idVenta:"444",
+      nombreCliente:"cliente1",
+      identificacionCliente:"12345",
+      vendedor:"usuario4"
+    },
+    {
+      Fecha:"dd/mm/aaaa",
+      idVenta:"555",
+      nombreCliente:"cliente1",
+      identificacionCliente:"12345",
+      vendedor:"usuario5"
+    }
+  ];
+  //useEffect(()=>{
+    //obtener lista de vehiculos desde el backend
+   //setVentas(ventas);
+  //},)
 
+  
     return(
         <body> 
             <Cabecera />
@@ -57,14 +103,18 @@ const RegistrarVenta = () =>{
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>dd/mm/aaaa</td>
-            <td>########</td>
-            <td>Usuario</td>
-            <td>########</td>
-            <td>Vendedor</td>
-          </tr>
-       </tbody>
+        {ventas.map((venta)=>{
+          return(
+                      <tr>
+                      <td>{venta.Fecha}</td>
+                      <td>{venta.idVenta}</td>
+                      <td>{venta.nombreCliente}</td>
+                      <td>{venta.identificacionCliente}</td>
+                      <td>{venta.vendedor}</td>
+                    </tr>
+          )
+        })}
+        </tbody>
       </Table>
       </div>
     </body>
