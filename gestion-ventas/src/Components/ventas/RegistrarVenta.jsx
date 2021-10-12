@@ -31,19 +31,21 @@ const RegistrarVenta = () =>{
              <div>
         <div>
           <form className="flex flex-co">
-          <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="ID de la venta"/>
-          <input onChange = {cambioUsuario} type="text" placeholder="Usuario"/>
-          <input type="text" placeholder="Fecha"/>
-          <input type="text" placeholder="valor de la venta"/>
-          <button type="button" onClick = {enviarDatosAlBack}>Enviar datos</button>
+          <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="Fecha de la venta"/>
+          <input onChange = {cambioUsuario} type="text" placeholder="ID venta"/>
+          <input type="text" placeholder="Nombre del cliente"/>
+          <input type="text" placeholder="Identificación del cliente"/>
+          <input type="text" placeholder="Vendedor"/>
+          <button type="button" onClick = {enviarDatosAlBack}>Registrar venta</button>
           </form>
       <Table striped bordered hover>
         <thead>
           <tr>
             <th>Fecha</th>
             <th>ID venta</th>
-            <th>Nombre</th>
-            <th>Email</th>
+            <th>Nombre cliente</th>
+            <th>Identificación</th>
+            <th>Vendedor</th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +53,8 @@ const RegistrarVenta = () =>{
             <td>dd/mm/aaaa</td>
             <td>########</td>
             <td>Usuario</td>
-            <td>@</td>
+            <td>########</td>
+            <td>Vendedor</td>
           </tr>
        </tbody>
       </Table>
