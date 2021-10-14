@@ -13,6 +13,12 @@ const Cabecera = () => {
                 <Link className="dropdown-item" to="/RegistrarUsuario">
                   Registrar usuario
                 </Link>
+                <Link className="dropdown-item" to="/RegistrarRol">
+                  Asignar rol
+                </Link>
+                <Link className="dropdown-item" to="/AgregarRol">
+                  Registrar Rol
+                </Link>
               </NavDropdown>
               <NavDropdown title="Producto" id="basic-nav-dropdown">
                 <Link className="dropdown-item" to="/RegistrarProducto">

@@ -9,37 +9,19 @@ import {
   Container,
   Card,
 } from "react-bootstrap";
-let resultado = "";
-var data = [];
-const RegistrarUsuario = () => {
+const RegistrarRol = () => {
   const [validated, setValidated] = useState(false);
-
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    } else {
-      let Indentificador = form["Indentificador"].value;
-      let nombre = form["nombre"].value;
-      let apellido = form["apellido"].value;
-      let Correo = form["Correo"].value;
-      let estado = form["estado"].value;
-      event.preventDefault();
-      data.push({
-        Indentificador: Indentificador,
-        nombre: nombre,
-        apellido: apellido,
-        Correo: Correo,
-        estado: estado
-      });
       alert("Dato Añadido");
       form.reset();
-      console.log(data);
+    
     }
     setValidated(true);
-  };
-
+  }; 
   function actualizar() {
     alert("Actualizar");
   } 
@@ -52,62 +34,35 @@ const RegistrarUsuario = () => {
       <Cabecera />
       <Container>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-          <Card className="shadow p-3 mb-5 bg-body rounded">
+          <Card className="shadow p-3 mb-5 bg-body rounded ">
             <Card.Body>
-              <Card.Title>Registro Usuario</Card.Title>
+              <Card.Title>Asignar Rol</Card.Title>
             </Card.Body>
             <Row className="mb-3">
-              <Form.Group as={Col} md="2" controlId="Indentificado">
-                <Form.Label>Indentificador</Form.Label>
+              <Form.Group as={Col} md="3" controlId="ID">
+                <Form.Label>ID</Form.Label>
                 <Form.Control
                   required
                   type="text"
-                  placeholder="Indentificador"
+                  placeholder="ID"
                   defaultValue=""
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="2" controlId="nombre">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="nombre"
-                  defaultValue=""
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="apellido">
-                <Form.Label>Apellido</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="apellido"
-                  defaultValue=""
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="Correo">
-                <Form.Label>Correo</Form.Label>
-                <InputGroup hasValidation>
-                  <InputGroup.Text id="Correo">@</InputGroup.Text>
-                  <Form.Control
-                    type="text"
-                    placeholder="Correo"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    Please choose a username.
-                  </Form.Control.Feedback>
-                </InputGroup>
-              </Form.Group>
-              <Form.Group as={Col} md="3" controlId="estado">
-                <Form.Label>Estado</Form.Label>
+
+              <Form.Group as={Col} md="4" controlId="estadousuario">
+                <Form.Label>Rolusuario</Form.Label>
                 <Form.Select defaultValue="">
-                  <option>Pendiente</option>
+                  <option>Administrador</option>
+                  <option>Vendedor</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Form.Group as={Col} md="4" controlId="estadorol">
+                <Form.Label>Estado Rol</Form.Label>
+                <Form.Select defaultValue="">
                   <option>Autorizado</option>
-                  <option>No autorizado</option>
+                  <option>Inativo</option>
                 </Form.Select>
               </Form.Group>
             </Row>
@@ -119,8 +74,8 @@ const RegistrarUsuario = () => {
             </Row>
           </Card>
         </Form>
-      </Container>
-      {/* Inicio table  */}
+      </Container> 
+      {/* Inicio de tabla  */}
       <div class="container">
         <div class="row justify-content-center mt-3">
           <div class="card shadow mb-5 big-body rounded">
@@ -128,14 +83,8 @@ const RegistrarUsuario = () => {
               <thead>
                 <tr>
                   <th scope="col">ID</th>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apallido</th>
-                  <th scope="col" colspan="1">
-                    Correo
-                  </th>
-                  <th scope="col" colspan="2">
-                    Estado
-                  </th>
+                  <th scope="col">Rol usuario</th>
+                  <th scope="col">Estado rol</th>
                 </tr>
               </thead>
               <tbody id="registro">
@@ -182,8 +131,12 @@ const RegistrarUsuario = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div>  
+
+    
+     
+
+
   );
 };
-
-export default RegistrarUsuario;
+export default RegistrarRol;
