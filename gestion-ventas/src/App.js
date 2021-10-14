@@ -9,6 +9,7 @@ import Login from "./Components/login/Login";
 import RegistrarUsuario from "./Components/usuario/RegistrarUsuario";
 import RegistrarProducto from "./Components/productos/RegistrarProducto";
 import Piepagina from "./Components/pie_pagina/Piepagina";
+import ConsultarProducto from "./Components/productos/ConsultarProducto";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/RegistrarVenta" component={RegistrarVenta} />
       <Route exact path="/RegistrarUsuario" component={RegistrarUsuario} />
       <Route exact path="/RegistrarProducto" component={RegistrarProducto} />
+      <Route exact path="/ConsultarProducto" component={ConsultarProducto} />
       <Piepagina/>
     </div>
   );
