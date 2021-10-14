@@ -11,8 +11,13 @@ import RegistrarRol from "./Components/usuario/RegistrarRol";
 import AgregarRol from "./Components/usuario/AgregarRol";
 import RegistrarProducto from "./Components/productos/RegistrarProducto";
 import Piepagina from "./Components/pie_pagina/Piepagina";
+import ConsultarProducto from "./Components/productos/ConsultarProducto";
+
+
 
 function App() {
+
+
   return (
     <div className="App">
       <Route exact path="/" component={Login} />
@@ -21,9 +26,15 @@ function App() {
       <Route exact path ="/RegistrarRol" component={RegistrarRol} /> 
       <Route exact path ="/AgregarRol" component={AgregarRol} />
       <Route exact path="/RegistrarProducto" component={RegistrarProducto} />
+      <Route exact path="/ConsultarProducto" component={ConsultarProducto} />
       <Piepagina/>
+
+      
     </div>
   );
 }
+
+
+
 
 export default App;

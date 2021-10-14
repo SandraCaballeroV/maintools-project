@@ -181,9 +181,16 @@ const RegistrarUsuario = () => {
             </table>
           </div>
         </div>
+<<<<<<< HEAD
       </div>
     </div>
   );
 };
 
 export default RegistrarUsuario;
+=======
+    )
+} 
+export default RegistrarUsuario
+
+>>>>>>> a75800a128737fc53f50bce46040da333393cf16

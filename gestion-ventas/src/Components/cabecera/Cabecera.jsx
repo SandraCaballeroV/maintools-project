@@ -24,6 +24,9 @@ const Cabecera = () => {
                 <Link className="dropdown-item" to="/RegistrarProducto">
                   Registrar producto
                 </Link>
+                <Link className="dropdown-item" to="ConsultarProducto">
+                  Consultar producto
+                </Link>
               </NavDropdown>
               <NavDropdown title="Venta" id="basic-nav-dropdown">
                 <Link className="dropdown-item" to="RegistrarVenta">
