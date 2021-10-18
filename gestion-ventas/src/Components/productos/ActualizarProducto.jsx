@@ -72,7 +72,7 @@ const ActualizarProducto = (props) => {
       ConsultarProducto()
       cancelar()
       form.reset()
-      alert("Registro exitoso")
+      alert("Actualización exitosa")
     } catch (error) {
       console.log(error);
     }

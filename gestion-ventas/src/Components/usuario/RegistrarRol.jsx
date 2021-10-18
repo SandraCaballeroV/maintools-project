@@ -133,10 +133,6 @@ const RegistrarRol = () => {
       </div>
     </div>  
 
-    
-     
-
-
   );
 };
 export default RegistrarRol;
