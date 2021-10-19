@@ -1,33 +1,14 @@
 import Cabecera from "../cabecera/Cabecera"
 import { Table } from "react-bootstrap"
 import React, {useEffect, useState,form} from "react"
-
+import axios from "axios"
 const RegistrarVenta = () =>{
+  const [input,setInput] = useState({
+    fechaVenta: '',
+    idVenta:'',
+    nombreCliente:''
+  })
 
-  const [idVenta,setIdVenta] = useState()
-  useEffect(() =>{
-    console.log('Hola, soy un use effect que se ejecuta solo una vez cuando la pagina se rederiza');
-    //paso 2
-    //paso 3
-  },[]);
-
-  //Otro useEffect
-  useEffect(()=>{
-    console.log('funcion que se ejecuta al cambiar el valor de idVenta');
-    console.log('la variable es:',idVenta);
-  },[idVenta]);
-  //Capturar info del input
-  const enviarDatosAlBack = () =>{
-    console.log("el id es",idVenta);
-  }
-
-  const cambioUsuario = (e)=>{
-    console.log(e.target.value);
-  }
-  //const mostrarVentas = ()=>{
-    //const [ventas,setVentas] = useState([]);
-  //}
-//informacion de la base de datos
   const ventas = [
     {
       Fecha:"dd/mm/aaaa",
@@ -69,7 +50,26 @@ const RegistrarVenta = () =>{
     //obtener lista de vehiculos desde el backend
    //setVentas(ventas);
   //},)
+  function handleChange(event){
+    const{name, value} = event.target;
 
+    setInput(prevInput => {
+      return{
+        ...prevInput,
+        [name]:value
+      }
+    })
+  }
+  
+  function handleClick(event){
+    event.preventDefault();
+    const nuevaVenta = {
+      fecha: input.fechaVenta,
+      idVenta: input.idVenta,
+      nombreCliente: input.nombreCliente
+    }
+    axios.post('http://localhost:9000/api/ventas',nuevaVenta)
+  }
   
     return(
         <body> 
@@ -80,16 +80,15 @@ const RegistrarVenta = () =>{
               
             
         <div>
-          <form > 
-          <input onChange={(e) => {setIdVenta(e.target.value);}} type="text" placeholder="Fecha de la venta"/>&nbsp;   
-          <input onChange = {cambioUsuario} type="text" placeholder="ID venta"/>&nbsp;
-          <input type="text" placeholder="Nombre del cliente"/>&nbsp;
-          <input type="text" placeholder="Identificación del cliente"/>&nbsp;
-          <input type="text" placeholder="Vendedor"/>&nbsp;
+          <form method = "post"> 
+          <input type="text" placeholder="Fecha de la venta" name="fechaVenta" value = {input.fechaVenta} onChange = {handleChange}/>&nbsp;   
+          <input type="text" placeholder="ID venta" name = "idVenta" value = {input.idVenta} onChange = {handleChange}/>&nbsp;
+          <input type="text" placeholder="Nombre del cliente" name = "nombreCliente" value = {input.nombreCliente} onChange = {handleChange}/>&nbsp;
+
           </form>
         </div>
         <div className = "mt-3">
-        <button type="button" onClick = {enviarDatosAlBack}>Registrar venta</button>
+        <button type="button" onClick = {handleClick}>Registrar venta</button>
         </div>
         <div className = "border border-dark mt-5 ">
           <Table striped bordered hover >
