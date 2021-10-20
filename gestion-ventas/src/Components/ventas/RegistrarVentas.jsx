@@ -2,6 +2,8 @@ import Cabecera from "../cabecera/Cabecera"
 import { Table } from "react-bootstrap"
 import React, {useEffect, useState,form} from "react"
 import axios from "axios"
+import { Component } from "react"
+//import { response } from "express"
 const RegistrarVenta = () =>{
   const [input,setInput] = useState({
     fechaVenta: '',
@@ -46,6 +48,7 @@ const RegistrarVenta = () =>{
       vendedor:"usuario5"
     }
   ];
+  
   //useEffect(()=>{
     //obtener lista de vehiculos desde el backend
    //setVentas(ventas);
@@ -70,7 +73,15 @@ const RegistrarVenta = () =>{
     }
     axios.post('http://localhost:9000/api/ventas',nuevaVenta)
   }
+
   
+  //const listaVentas = {
+    //fecha: venta.fechaVenta,
+    //idVenta: venta.idVenta,
+    //nombreCliente: venta.nombreCliente
+  //}
+
+
     return(
         <body> 
             <Cabecera />
@@ -78,6 +89,8 @@ const RegistrarVenta = () =>{
               <h2>Registro de ventas</h2>
             </div> 
               
+            
+            
             
         <div>
           <form method = "post"> 
@@ -90,6 +103,13 @@ const RegistrarVenta = () =>{
         <div className = "mt-3">
         <button type="button" onClick = {handleClick}>Registrar venta</button>
         </div>
+  
+       
+        
+        
+        
+
+  
         <div className = "border border-dark mt-5 ">
           <Table striped bordered hover >
         <thead>
@@ -97,19 +117,16 @@ const RegistrarVenta = () =>{
             <th>Fecha</th>
             <th>ID venta</th>
             <th>Nombre cliente</th>
-            <th>Identificación</th>
-            <th>Vendedor</th>
           </tr>
         </thead>
         <tbody>
         {ventas.map((venta)=>{
           return(
-                      <tr>
+                      <tr key = {venta._id}>
                       <td>{venta.Fecha}</td>
                       <td>{venta.idVenta}</td>
                       <td>{venta.nombreCliente}</td>
-                      <td>{venta.identificacionCliente}</td>
-                      <td>{venta.vendedor}</td>
+                      
                     </tr>
           )
         })}

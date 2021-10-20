@@ -16,6 +16,42 @@ app.get('/',(req, res) => {
     res.send("Bienvenido");
 });
 
+//Test clase
+app.get('/ventatest',(req,res)=>{
+
+    const vents = [
+        {
+            Fecha:"dd/mm/aaaa",
+            idVenta:"111",
+            nombreCliente:"cliente1",
+            identificacionCliente:"12345",
+            vendedor:"usuario1"
+          },
+          {
+            Fecha:"dd/mm/aaaa",
+            idVenta:"222",
+            nombreCliente:"cliente1",
+            identificacionCliente:"12345",
+            vendedor:"usuario2"
+          },
+          {
+            Fecha:"dd/mm/aaaa",
+            idVenta:"333",
+            nombreCliente:"cliente1",
+            identificacionCliente:"12345",
+            vendedor:"usuario3"
+          }
+    ];
+    res.send(vents);
+})
+
+app.post('/ventatest/nuevo',(req,res)=>{
+    const datosvent = req.body;
+    console.log("llaves ",Object.keys(datosvent))
+    //console.log("venta a crear",req.body);
+    res.send("Creado")
+})
+
 // Mongoose
 mongoose.connect(process.env.MONGODB_URI)
 .then(()=> console.log('Conexion exitosa con el servidor'))

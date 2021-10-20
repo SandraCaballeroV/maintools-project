@@ -29,8 +29,11 @@ const Cabecera = () => {
                 </Link>
               </NavDropdown>
               <NavDropdown title="Venta" id="basic-nav-dropdown">
-                <Link className="dropdown-item" to="RegistrarVenta">
+                <Link className="dropdown-item" to="RegistrarVentas">
                   Registrar venta
+                </Link>
+                <Link className="dropdown-item" to="ConsultarVentas">
+                  Lista de ventas
                 </Link>
                 {/* Si quiere agregar un nuevo enlace se hace lo mismo que en Registrar venta */}
                 {/* ej: <Link className="dropdown-item" to="nombre de ruta a enviar">

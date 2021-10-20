@@ -67,7 +67,7 @@ const ConsultarProducto = () => {
   };
 
   function alerta(result) {
-    var opcion = confirm("Estás seguro que deseas eliminar este producto");
+    var opcion = window.confirm("Estás seguro que deseas eliminar este producto");
     if (opcion == true) {
       CambiarEstado(result);
     }

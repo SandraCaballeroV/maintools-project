@@ -10,15 +10,17 @@ router.post('/ventas',(req,res) => {
     venta.save()
     .then((data) => res.json(data))
     .catch((error)=>res.json({message:error}));
+    res.send("correcto")
 });
 
 // obtener todas las ventas
-router.get('/ventas',(req,res) => {
+router.get('/listaventas',(req,res) => {
     //res.send("Crear venta");
     ventaSchema
     .find()
     .then((data) => res.json(data))
     .catch((error)=>res.json({message:error}));
+    
 });
 
 //obtener solo una venta
