@@ -10,7 +10,8 @@ router.post('/ventas',(req,res) => {
     venta.save()
     .then((data) => res.json(data))
     .catch((error)=>res.json({message:error}));
-    res.send("correcto")
+    //res.send("correcto")
+    
 });
 
 // obtener todas las ventas

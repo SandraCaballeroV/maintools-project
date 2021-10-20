@@ -8,7 +8,10 @@ const RegistrarVenta = () =>{
   const [input,setInput] = useState({
     fechaVenta: '',
     idVenta:'',
-    nombreCliente:''
+    nombreCliente:'',
+    tipoIdentificacion:'',
+    numeroIdentificacion:'',
+    nombreVendedor:''
   })
 
   const ventas = [
@@ -69,9 +72,13 @@ const RegistrarVenta = () =>{
     const nuevaVenta = {
       fecha: input.fechaVenta,
       idVenta: input.idVenta,
-      nombreCliente: input.nombreCliente
+      nombreCliente: input.nombreCliente,
+      tipoIdentificacion: input.tipoIdentificacion,
+      numeroIdentificacion: input.numeroIdentificacion,
+      nombreVendedor: input.nombreVendedor
     }
     axios.post('http://localhost:9000/api/ventas',nuevaVenta)
+    alert('Venta registrada correctamente')
   }
 
   
@@ -92,47 +99,21 @@ const RegistrarVenta = () =>{
             
             
             
-        <div>
+        <div className = "container">
           <form method = "post"> 
           <input type="text" placeholder="Fecha de la venta" name="fechaVenta" value = {input.fechaVenta} onChange = {handleChange}/>&nbsp;   
           <input type="text" placeholder="ID venta" name = "idVenta" value = {input.idVenta} onChange = {handleChange}/>&nbsp;
           <input type="text" placeholder="Nombre del cliente" name = "nombreCliente" value = {input.nombreCliente} onChange = {handleChange}/>&nbsp;
-
+          <input type="text" placeholder="Tipo de identificación" name = "tipoIdentificacion" value = {input.tipoIdentificacion} onChange = {handleChange}/>&nbsp;
+          <input type="text" placeholder="Número de identificación" name = "numeroIdentificacion" value = {input.numeroIdentificacion} onChange = {handleChange}/>&nbsp;
+          <input type="text" placeholder="Nombre del vendedor" name = "nombreVendedor" value = {input.nombreVendedor} onChange = {handleChange}/>&nbsp;
           </form>
         </div>
         <div className = "mt-3">
         <button type="button" onClick = {handleClick}>Registrar venta</button>
         </div>
   
-       
-        
-        
-        
 
-  
-        <div className = "border border-dark mt-5 ">
-          <Table striped bordered hover >
-        <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>ID venta</th>
-            <th>Nombre cliente</th>
-          </tr>
-        </thead>
-        <tbody>
-        {ventas.map((venta)=>{
-          return(
-                      <tr key = {venta._id}>
-                      <td>{venta.Fecha}</td>
-                      <td>{venta.idVenta}</td>
-                      <td>{venta.nombreCliente}</td>
-                      
-                    </tr>
-          )
-        })}
-        </tbody>
-      </Table>
-      </div>
     </body>
         
         

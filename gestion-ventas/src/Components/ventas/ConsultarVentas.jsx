@@ -5,7 +5,10 @@ function Notes(){
     const[notes, setNotes] = useState([{
       fecha:'',
       idVenta:'',
-      nombreCliente:''
+      nombreCliente:'',
+      tipoIdentificacion:'',
+      numeroIdentificacion:'',
+      nombreVendedor:''
     }])
 
     useEffect(()=>{
@@ -19,12 +22,15 @@ function Notes(){
     <Cabecera />
       <h1>Lista de ventas</h1>
       
-      <Table striped bordered hover >
+      <Table striped bordered hover className="container">
         <thead>
           <tr>
             <th>Fecha</th>
             <th>ID venta</th>
             <th>Nombre cliente</th>
+            <th>Tipo de identificación</th>
+            <th>Número de identificación</th>
+            <th>Vendedor</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +39,9 @@ function Notes(){
         <td>{note.fecha}</td>
         <td>{note.idVenta}</td>
         <td>{note.nombreCliente}</td>
+        <td>{note.tipoIdentificacion}</td>
+        <td>{note.numeroIdentificacion}</td>
+        <td>{note.nombreVendedor}</td>
       </tr>
       
         )}
