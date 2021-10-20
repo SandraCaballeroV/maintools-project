@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cabecera from "../cabecera/Cabecera";
 import {
   Form,
@@ -11,22 +11,105 @@ import {
 } from "react-bootstrap";
 const RegistrarRol = () => {
   const [validated, setValidated] = useState(false);
+  const [consulusuario, setConsulusuario] = useState([]);
+  const [actualizar, setactualizar] = useState([]);
+  const [consulid, setConsulid] = useState([]);
+  useEffect(() => {
+    ConsultarUsuario();
+  }, []);
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      alert("Dato Añadido");
-      form.reset();
-    
+    } else {
+      let id = form["ID"].value;
+      let estado_usuaio = form["estadousuario"].value;
+      let rol = form["estadorol"].value;
+      event.preventDefault();
+      asignarRol(id, estado_usuaio, rol, form);
     }
     setValidated(true);
-  }; 
-  function actualizar() {
-    alert("Actualizar");
-  } 
-  function eliminar(){
-    alert("eliminar")
+  };
+  async function asignarRol(id, estado_usuaio, rol, form) {
+    try {
+      fetch(`http://localhost:4000/api/user/${id}`)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setConsulid(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+    const data = {
+      nombre: consulid.nombre,
+      apellido: consulid.apellido,
+      Correo: consulid.Correo,
+      estado_usuaio: estado_usuaio,
+      estado: consulid.estado,
+      rol: rol,
+    };
+    try {
+      let config = {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      let res = await fetch(`http://localhost:4000/api/user/${id}`, config);
+      let json = await res.json();
+      console.log(json);
+      setConsulid([]);
+      setactualizar([]);
+      ConsultarUsuario();
+      form.reset();
+      alert("Registro exitoso");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function ConsultarUsuario() {
+    try {
+      await fetch("http://localhost:4000/api/user")
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setConsulusuario(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleClick = (id) => (e) => {
+    //Actualizar
+    try {
+      fetch(`http://localhost:4000/api/user/${id}`)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setactualizar(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  function eliminar() {
+    alert("eliminar");
   }
 
   return (
@@ -45,21 +128,21 @@ const RegistrarRol = () => {
                   required
                   type="text"
                   placeholder="ID"
-                  defaultValue=""
+                  defaultValue={actualizar._id}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
 
-              <Form.Group as={Col} md="4" controlId="estadousuario">
-                <Form.Label>Rolusuario</Form.Label>
+              <Form.Group as={Col} md="3" controlId="estadousuario">
+                <Form.Label>Rol usuario</Form.Label>
                 <Form.Select defaultValue="">
                   <option>Administrador</option>
                   <option>Vendedor</option>
                 </Form.Select>
               </Form.Group>
 
-              <Form.Group as={Col} md="4" controlId="estadorol">
-                <Form.Label>Estado Rol</Form.Label>
+              <Form.Group as={Col} md="3" controlId="estadorol">
+                <Form.Label>Estado Usuario</Form.Label>
                 <Form.Select defaultValue="">
                   <option>Autorizado</option>
                   <option>Inativo</option>
@@ -74,69 +157,44 @@ const RegistrarRol = () => {
             </Row>
           </Card>
         </Form>
-      </Container> 
+      </Container>
       {/* Inicio de tabla  */}
-      <div class="container">
-        <div class="row justify-content-center mt-3">
-          <div class="card shadow mb-5 big-body rounded">
-            <table class="table table-hover">
+      <div className="container">
+        <div className="row justify-content-center mt-3">
+          <div className="card shadow mb-5 big-body rounded">
+            <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">ID</th>
+                  <th scope="col">Nombre</th>
                   <th scope="col">Rol usuario</th>
-                  <th scope="col">Estado rol</th>
+                  <th scope="col">Estado usuario</th>
                 </tr>
               </thead>
               <tbody id="registro">
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td
-                    id="actualizar"
-                    onClick={actualizar}
-                    style={{ cursor: "pointer" }}
-                  >
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar} style={{ cursor: "pointer" }} >
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td id="actualizar" onClick={actualizar}style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}>
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="5"></td>
-                  <td id="actualizar" onClick={actualizar} style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}  >
-                    🗑
-                  </td>
-                </tr>
+                {consulusuario.map((item) => (
+                  <tr key={item._id}>
+                    <th scope="row">{item._id}</th>
+                    <td>{item.nombre}</td>
+                    <td>{item.estado_usuaio}</td>
+                    <td>{item.rol}</td>
+                    
+
+                    <td
+                      id="actualizar"
+                      onClick={handleClick(item._id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🖊
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-    </div>  
-
-    
-     
-
-
+    </div>
   );
 };
 export default RegistrarRol;

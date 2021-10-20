@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Cabecera from "../cabecera/Cabecera";
 import {
   Form,
@@ -10,41 +10,137 @@ import {
   Card,
 } from "react-bootstrap";
 let resultado = "";
-var data = [];
+
 const RegistrarUsuario = () => {
   const [validated, setValidated] = useState(false);
+  const [consulusuario, setConsulusuario] = useState([]);
+  const [actualizar, setactualizar] = useState([]); 
+  const [condicion , setCondicion] = useState(false);
+  useEffect(() => {
+    ConsultarUsuario();
+  }, []);
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event){
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-    } else {
-      let Indentificador = form["Indentificador"].value;
+    } else if (condicion == true) { 
+      event.stopPropagation();
+      event.preventDefault();
       let nombre = form["nombre"].value;
       let apellido = form["apellido"].value;
       let Correo = form["Correo"].value;
-      let estado = form["estado"].value;
+
       event.preventDefault();
-      data.push({
-        Indentificador: Indentificador,
+      const data = {
         nombre: nombre,
         apellido: apellido,
         Correo: Correo,
-        estado: estado
-      });
-      alert("Dato Añadido");
+        estado_usuaio: "pendiente",
+        estado: "activo",
+        rol: "",
+      };
+      try {
+        let config = {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+        let res =  await fetch(`http://localhost:4000/api/user/${actualizar._id}`, config);
+        let json = await res.json();
+        console.log(json);
+        setactualizar([]);
+        setCondicion(false);
+        ConsultarUsuario();
+
+        form.reset() 
+        alert("Registro exitoso")
+      } catch (error) {
+        console.log(error);
+      }
+      
+      console.log("actualizar");
+      
+    } else {
+      let nombre = form["nombre"].value;
+      let apellido = form["apellido"].value;
+      let Correo = form["Correo"].value;
+
+      event.preventDefault();
+      const data = {
+        nombre: nombre,
+        apellido: apellido,
+        Correo: Correo,
+        estado_usuaio: "pendiente",
+        estado: "activo",
+        rol: "",
+      };
+      registrar(data);
+
       form.reset();
-      console.log(data);
     }
     setValidated(true);
   };
+  async function registrar(data) {
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      let res = await fetch("http://localhost:4000/api/user", config);
+      let json = await res.json();
+      console.log(json);
+      ConsultarUsuario();
+      alert("Registro exitoso");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function ConsultarUsuario() {
+    try {
+      await fetch("http://localhost:4000/api/user")
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setConsulusuario(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  const handleClick = (id) => (e) => {
+    //Actualizar
+    setCondicion(true);
+    try {
+      fetch(`http://localhost:4000/api/user/${id}`)
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setactualizar(result);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  function actualizar() {
-    alert("Actualizar");
-  } 
-  function eliminar(){
-    alert("eliminar")
+  function eliminar() {
+    alert("eliminar");
   }
 
   return (
@@ -57,37 +153,29 @@ const RegistrarUsuario = () => {
               <Card.Title>Registro Usuario</Card.Title>
             </Card.Body>
             <Row className="mb-3">
-              <Form.Group as={Col} md="2" controlId="Indentificado">
-                <Form.Label>Indentificador</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Indentificador"
-                  defaultValue=""
-                />
-                <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group as={Col} md="2" controlId="nombre">
+              <Form.Group as={Col} md="4" controlId="nombre">
                 <Form.Label>Nombre</Form.Label>
                 <Form.Control
                   required
                   type="text"
                   placeholder="nombre"
-                  defaultValue=""
+                  defaultValue={actualizar == "" ? "" : `${actualizar.nombre}`}
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="2" controlId="apellido">
+              <Form.Group as={Col} md="4" controlId="apellido">
                 <Form.Label>Apellido</Form.Label>
                 <Form.Control
                   required
                   type="text"
                   placeholder="apellido"
-                  defaultValue=""
+                  defaultValue={
+                    actualizar == "" ? "" : `${actualizar.apellido}`
+                  }
                 />
                 <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
               </Form.Group>
-              <Form.Group as={Col} md="2" controlId="Correo">
+              <Form.Group as={Col} md="4" controlId="Correo">
                 <Form.Label>Correo</Form.Label>
                 <InputGroup hasValidation>
                   <InputGroup.Text id="Correo">@</InputGroup.Text>
@@ -96,19 +184,14 @@ const RegistrarUsuario = () => {
                     placeholder="Correo"
                     aria-describedby="inputGroupPrepend"
                     required
+                    defaultValue={
+                      actualizar == "" ? "" : `${actualizar.Correo}`
+                    }
                   />
                   <Form.Control.Feedback type="invalid">
                     Please choose a username.
                   </Form.Control.Feedback>
                 </InputGroup>
-              </Form.Group>
-              <Form.Group as={Col} md="3" controlId="estado">
-                <Form.Label>Estado</Form.Label>
-                <Form.Select defaultValue="">
-                  <option>Pendiente</option>
-                  <option>Autorizado</option>
-                  <option>No autorizado</option>
-                </Form.Select>
               </Form.Group>
             </Row>
 
@@ -121,76 +204,53 @@ const RegistrarUsuario = () => {
         </Form>
       </Container>
       {/* Inicio table  */}
-      <div class="container">
-        <div class="row justify-content-center mt-3">
-          <div class="card shadow mb-5 big-body rounded">
-            <table class="table table-hover">
+      <div className="container">
+        <div className="row justify-content-center mt-3">
+          <div className="card shadow mb-5 big-body rounded">
+            <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">ID</th>
                   <th scope="col">Nombre</th>
-                  <th scope="col">Apallido</th>
-                  <th scope="col" colspan="1">
+                  <th scope="col">Apellido</th>
+                  <th scope="col" colSpan="1">
                     Correo
                   </th>
-                  <th scope="col" colspan="2">
-                    Estado
-                  </th>
+                  <th>Estado usuario</th>
+                  <th scope="col">Estado</th>
                 </tr>
               </thead>
               <tbody id="registro">
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td
-                    id="actualizar"
-                    onClick={actualizar}
-                    style={{ cursor: "pointer" }}
-                  >
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar} style={{ cursor: "pointer" }} >
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td id="actualizar" onClick={actualizar}style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}>
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="5"></td>
-                  <td id="actualizar" onClick={actualizar} style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}  >
-                    🗑
-                  </td>
-                </tr>
+                {consulusuario.map((item) => (
+                  <tr key={item._id}>
+                    <th scope="row">{item._id}</th>
+                    <td>{item.nombre}</td>
+                    <td>{item.apellido}</td>
+                    <td>{item.Correo}</td>
+                    <td>{item.estado_usuaio}</td>
+                    <td>{item.estado}</td>
+                    <td
+                      id="actualizar"
+                      onClick={handleClick(item._id)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🖊
+                    </td>
+                    <td
+                      id="eliminar"
+                      onClick={eliminar}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🗑
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
-<<<<<<< HEAD
       </div>
     </div>
   );
 };
-
 export default RegistrarUsuario;
-=======
-    )
-} 
-export default RegistrarUsuario
-
->>>>>>> a75800a128737fc53f50bce46040da333393cf16

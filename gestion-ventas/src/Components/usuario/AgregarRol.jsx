@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Cabecera from "../cabecera/Cabecera";
 import {
   Form,
@@ -12,36 +12,93 @@ import {
 
 const AgregarRol = () => {
   const [validated, setValidated] = useState(false);
+  const[consultarRol, setConsultarRol] = useState([]);
+  useEffect(() => {
+    ConsultarRol();
+  }, []);
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
-      alert("Dato Añadido");
+    } else {
+      let nombreRol = form["nombreRol"].value;
+      event.preventDefault();
+      const data = {
+        nombreRol: nombreRol,
+        estado: "activo",
+        rol: "",
+      };
+      registrar(data);
       form.reset();
     }
     setValidated(true);
   };
+  async function registrar(data) {
+    try {
+      let config = {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      };
+      let res = await fetch("http://localhost:4000/api/user/rol", config);
+      let json = await res.json();
+      console.log(json);
+      ConsultarRol();
+
+      alert("Registro exitoso");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function ConsultarRol() {
+    try {
+      await fetch("http://localhost:4000/api/user/rol")
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            setConsultarRol(result);
+            console.log(result)
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+    } catch (error) {
+      console.log(error);
+    }
+  } 
+  //Asignar rol y cambiar estado de un ususario 
+
   function actualizar() {
     alert("Actualizar");
-  } 
-  function eliminar(){
-    alert("eliminar")
+  }
+  function eliminar() {
+    alert("eliminar");
   }
 
   return (
     <div>
       <Cabecera />
-      <Container> 
-      
+      <Container>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Row className="justify-content-md-center">
-          <Card className="shadow p-3 mb-5 bg-body rounded justify-content-md-center " style={{ width: '60%' }}>
-            <Card.Body>
-              <Card.Title>Asignar Rol</Card.Title>
-            </Card.Body>
-            
-              <Form.Group as={Row} controlId="Nombre Rol" className="justify-content-md-center">
+          <Row className="justify-content-md-center">
+            <Card
+              className="shadow p-3 mb-5 bg-body rounded justify-content-md-center "
+              style={{ width: "60%" }}
+            >
+              <Card.Body>
+                <Card.Title>Registrar Rol</Card.Title>
+              </Card.Body>
+
+              <Form.Group
+                as={Row}
+                controlId="nombreRol"
+                className="justify-content-md-center"
+              >
                 <Form.Label column sm="2">
                   Nombre Rol
                 </Form.Label>
@@ -49,29 +106,30 @@ const AgregarRol = () => {
                   <Form.Control
                     required
                     type="text"
-                    placeholder="Nombre Rol"
+                    placeholder="nombreRol"
                     defaultValue=""
                   />
                   <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Col>
               </Form.Group>
-           
 
-            <Row className="justify-content-md-center mt-3">
-              <Col sm={12}>
-                <Button type="submit">Enviar</Button>
-              </Col>
-            </Row>
-          </Card>
+              <Row className="justify-content-md-center mt-3">
+                <Col sm={12}>
+                  <Button type="submit">Enviar</Button>
+                </Col>
+              </Row>
+            </Card>
           </Row>
-        </Form> 
-       
-      </Container>   
-      {/* inicio de formulario */}
-      <div class="container">
-        <div class="row justify-content-center mt-3" >
-          <div class="card shadow mb-6 big-body rounded" style={{ width: '60%' }} >
-            <table class="table table-hover">
+        </Form>
+      </Container>
+      {/* inicio de table */}
+      <div className="container">
+        <div className="row justify-content-center mt-3">
+          <div
+            className="card shadow mb-6 big-body rounded"
+            style={{ width: "60%" }}
+          >
+            <table className="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">ID</th>
@@ -80,44 +138,27 @@ const AgregarRol = () => {
                 </tr>
               </thead>
               <tbody id="registro">
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td
-                    id="actualizar"
-                    onClick={actualizar}
-                    style={{ cursor: "pointer" }}
-                  >
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar} style={{ cursor: "pointer" }} >
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="3"></td>
-                  <td></td>
-                  <td></td>
-                  <td id="actualizar" onClick={actualizar}style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}>
-                    🗑
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row"></th>
-                  <td colspan="5"></td>
-                  <td id="actualizar" onClick={actualizar} style={{ cursor: "pointer" }}>
-                    🖊
-                  </td>
-                  <td id="eliminar" onClick={eliminar}style={{ cursor: "pointer" }}  >
-                    🗑
-                  </td>
-                </tr>
+                {consultarRol.map((item) => (
+                  <tr key={item._id}>
+                    <th scope="row">{item._id}</th>
+                    <td>{item.nombreRol}</td>
+                    <td>{item.estado}</td>
+                    <td
+                      id="actualizar"
+                      onClick={actualizar}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🖊
+                    </td>
+                    <td
+                      id="eliminar"
+                      onClick={eliminar}
+                      style={{ cursor: "pointer" }}
+                    >
+                      🗑
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
