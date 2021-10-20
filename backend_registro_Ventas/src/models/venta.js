@@ -12,8 +12,19 @@ const ventaSchema = mongoose.Schema({
     nombreCliente: {
         type: String,
         required: true
+    },
+    tipoIdentificacion: {
+        type: String,
+        required: true
+    },
+    numeroIdentificacion: {
+        type: Number,
+        required: true
+    },
+    nombreVendedor: {
+        type: String,
+        required: true
     }
-    
 
 });
 
