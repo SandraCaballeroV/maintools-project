@@ -11,29 +11,33 @@ import {
 import Cabecera from "../cabecera/Cabecera";
 const RegistrarProducto = () => {
   const [validated, setValidated] = useState(false);
-  
+  const [loader, setLoader] = useState(false)
+
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+    } else {
+      setLoader(true)
+      event.preventDefault();
+      let nombre = form["productName"].value;
+      let valor = form["valueUnit"].value;
+      let estado_producto = form["stateProduct"].value;
+      let descripcion = form["description"].value;
+      const dataform = {
+        nombre: nombre,
+        valor: valor,
+        estado_producto: estado_producto,
+        Descripcion: descripcion,
+        estado: "Activo",
+      };
+      setTimeout(() => {
+        registrarProducto(dataform);
+        form.reset()
+      }, 5000);
     }
     setValidated(true);
-    event.preventDefault();
-    let nombre = form["productName"].value;
-    let valor = form["valueUnit"].value;
-    let estado_producto = form["stateProduct"].value;
-    let descripcion = form["description"].value;
-    const dataform = {
-      nombre: nombre,
-      valor: valor,
-      estado_producto: estado_producto,
-      Descripcion: descripcion,
-      estado: "Activo",
-    };
-    setTimeout(() => {
-      registrarProducto(dataform);
-    }, 5000);
   };
 
   async function registrarProducto(dataform) {
@@ -49,7 +53,8 @@ const RegistrarProducto = () => {
       let res = await fetch("http://localhost:4000/api/productos", config);
       let json = await res.json();
       console.log(json);
-      alert("Registro exitoso")
+      alert("Registro exitoso");
+      setLoader(false)
     } catch (error) {
       console.log(error);
     }
@@ -128,7 +133,9 @@ const RegistrarProducto = () => {
             </Row>
             <Row className="justify-content-md-center">
               <Col sm={12}>
-                <Button type="submit">Registrar Producto</Button>
+                <Button type="submit">
+                  { loader == false ? "Registrar Producto" : <img src={"https://acegif.com/wp-content/uploads/loading-25.gif"} alt="gif de algo" style={{ width: "20px" }}/>}
+                </Button>
               </Col>
             </Row>
           </Card>

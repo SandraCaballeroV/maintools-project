@@ -1,6 +1,7 @@
 // Montar el servidor
 const express = require("express"); // requerimos el modulo de express
 const mongoose = require("mongoose"); // requerimo el modulo de mongoose
+const cors = require("cors")
 
 
 const app = express(); // ejecutamos express (express() retorna el objeto de la aplicación)
@@ -14,6 +15,7 @@ const registrar_rol = require("./routes/registrarRol_usuario")
 // Variable de entrono para la conexion
 const mongo_uri = "MONGODB_URI=mongodb+srv://Maintools:maintools@registroventas.jih7d.mongodb.net/GestionVentas?retryWrites=true&w=majority";
 //middleware
+app.use(cors())
 app.use(express.json()) // hace que la peticion sea reconocida
 
 app.use('/api', productRouter) // que le agregue '/api' a todas las rutas que se creanas
