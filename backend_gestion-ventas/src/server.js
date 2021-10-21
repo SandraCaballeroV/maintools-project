@@ -3,19 +3,25 @@ const express = require("express"); // requerimos el modulo de express
 const mongoose = require("mongoose"); // requerimo el modulo de mongoose
 const cors = require("cors")
 
+
 const app = express(); // ejecutamos express (express() retorna el objeto de la aplicación)
 const port = process.env.PORT || 4000; // process.env.PORT toma el puerto del hosting cuando ya este en producción
 require("dotenv").config(); // ruta para conectarnos a la base de datos mongodb atlas
 
 const productRouter = require("./routes/producto_route") //requerimos el archivo donde esta la ruta
-
+const registrarUsuario_route = require("./routes/regitrarUsuario_route")
+const registrar_rol = require("./routes/registrarRol_usuario")
+const ventaRoutes = require("./routes/venta_route")
 // Variable de entrono para la conexion
 const mongo_uri = "MONGODB_URI=mongodb+srv://Maintools:maintools@registroventas.jih7d.mongodb.net/GestionVentas?retryWrites=true&w=majority";
 //middleware
 app.use(cors())
 app.use(express.json()) // hace que la peticion sea reconocida
-app.use('/api', productRouter) // que le agregue '/api' a todas las rutas que se crean
 
+app.use('/api', productRouter) // que le agregue '/api' a todas las rutas que se creanas
+app.use('/api', registrar_rol)
+app.use('/api', registrarUsuario_route)
+app.use('/api',ventaRoutes)
 //routes
 app.get("/", (req, res) => {
   res.send("welcome to my api");

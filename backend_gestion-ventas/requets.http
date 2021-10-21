@@ -1,12 +1,13 @@
 ###
-POST http://localhost:4000/api/productos HTTP/1.1
+POST http://localhost:4000/api/user/rol HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre": "Sofa",
-    "valor": "150000",
-    "estado_producto": "Disponible",
-    "Descripcion": "Sofa cama",
-    "estado": "Activo"
+     "nombreRol": "administrador",
+     "estado": " pendiente"
+        
 
 }
+###
+GET http://localhost:4000/api/user/rol HTTP/1.1
+Content-Type: application/json
