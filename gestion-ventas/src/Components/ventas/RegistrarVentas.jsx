@@ -1,5 +1,5 @@
 import Cabecera from "../cabecera/Cabecera"
-import { Table } from "react-bootstrap"
+import { Table,DropdownButton,Dropdown } from "react-bootstrap"
 import React, {useEffect, useState,form} from "react"
 import axios from "axios"
 import { Component } from "react"
@@ -77,11 +77,11 @@ const RegistrarVenta = () =>{
       numeroIdentificacion: input.numeroIdentificacion,
       nombreVendedor: input.nombreVendedor
     }
-    axios.post('http://localhost:9000/api/ventas',nuevaVenta)
+    axios.post('http://localhost:4000/api/ventas',nuevaVenta)
     alert('Venta registrada correctamente')
   }
 
-  
+
   //const listaVentas = {
     //fecha: venta.fechaVenta,
     //idVenta: venta.idVenta,
@@ -96,7 +96,7 @@ const RegistrarVenta = () =>{
               <h2>Registro de ventas</h2>
             </div> 
               
-            
+          
             
             
         <div className = "container">

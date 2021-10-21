@@ -1,7 +1,7 @@
 import Cabecera from "../cabecera/Cabecera"
 import { Table } from "react-bootstrap"
 import React, {useEffect, useState} from "react"
-function Notes(){
+function RegistroVenta(){
     const[notes, setNotes] = useState([{
       fecha:'',
       idVenta:'',
@@ -12,7 +12,7 @@ function Notes(){
     }])
 
     useEffect(()=>{
-      fetch("http://localhost:9000/api/listaventas").then(res =>{
+      fetch("http://localhost:4000/api/listaventas").then(res =>{
       if(res.ok){
         return res.json()
       }
@@ -49,4 +49,4 @@ function Notes(){
       </Table>
       </div>
   }
-  export default Notes;
+  export default RegistroVenta;

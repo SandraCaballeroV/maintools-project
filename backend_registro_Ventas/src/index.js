@@ -49,6 +49,7 @@ app.post('/ventatest/nuevo',(req,res)=>{
     const datosvent = req.body;
     console.log("llaves ",Object.keys(datosvent))
     //console.log("venta a crear",req.body);
+    //condiciones de campos (status)
     res.send("Creado")
 })
 
